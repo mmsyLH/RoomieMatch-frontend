@@ -4,8 +4,7 @@ import Index from "../pages/Index.vue"
 import Team from "../pages/Team.vue";
 import User from "../pages/User.vue";
 import Talk from "../pages/Talk.vue";
-
-
+import SearchPages from "../pages/SearchPages.vue";
 
 
 // 2. 定义一些路由
@@ -16,6 +15,7 @@ const routes = [
     {path: '/team', component: Team},
     {path: '/user', component: User},
     {path: '/talk', component: Talk},
+    {path: '/search', component: SearchPages},
 ]
 
 export default routes;
