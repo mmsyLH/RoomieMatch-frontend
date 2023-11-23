@@ -12,7 +12,7 @@
   <div v-if="activeIds.length === 0">请选择标签</div>
   <van-row gutter="16" style="padding: 0 16px">
     <van-col v-for="tag in activeIds">
-      <van-tag  closeable size="small" type="primary" @close="doclose(tag)">
+      <van-tag closeable size="small" type="primary" @close="doclose(tag)">
         {{ tag }}
       </van-tag>
     </van-col>
@@ -24,11 +24,18 @@
       v-model:main-active-index="activeIndex"
       :items="tagList"
   />
+
+  <van-button block type="primary" @click="doSearchResult">搜索2</van-button>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
+//路由
+import {useRouter} from "vue-router";
+import myAxios from "../plugins/axios.ts";
+const router = useRouter();
 
+//
 const searchText = ref('');
 
 const originTagList = [
@@ -86,6 +93,8 @@ const originTagList = [
       {text: '考研', id: '考研'},
       {text: '考公', id: '考公'},
       {text: '就业', id: '就业'},
+      {text: 'java', id: 'java'},
+      {text: 'python', id: 'python'},
     ],
   },
   {
@@ -124,7 +133,7 @@ const onSearch = (val) => {
   // 将原始的标签列表复制到一个临时变量中
   tagList.value = originTagList.map(parentTag => {
     // 复制父级标签对象
-    const tempParentTag = { ...parentTag };
+    const tempParentTag = {...parentTag};
     // 复制子级标签数组
     const tempChildren = [...parentTag.children];
     // 使用搜索关键字过滤子级标签数组
@@ -146,11 +155,21 @@ const activeIndex = ref(0);
 
 
 //关闭标签
-const  doclose = (tag) =>{
-  activeIds.value = activeIds.value.filter(item =>{
+const doclose = (tag) => {
+  activeIds.value = activeIds.value.filter(item => {
     return item !== tag;
   })
+}
 
+//执行搜索
+const doSearchResult = () => {
+   router.push({
+    path: "/user/list",
+    query: {
+      //已选中的标签
+      tags:activeIds.value
+    }
+  })
 }
 
 </script>

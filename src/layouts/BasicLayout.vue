@@ -15,8 +15,8 @@
   </div>
   <van-tabbar route>
 <!-- replace 是否支持回到前一个页面   -->
-    <van-tabbar-item icon="home-o" name="index"  to="/" >主页</van-tabbar-item>
-    <van-tabbar-item icon="search" name="team" to="/team" >队伍页</van-tabbar-item>
+    <van-tabbar-item icon="home-o"  to="/" >主页</van-tabbar-item>
+    <van-tabbar-item icon="search" name="team" to="/team">队伍页</van-tabbar-item>
     <van-tabbar-item icon="friends-o" name="talk" to="/talk">聊天</van-tabbar-item>
     <van-tabbar-item icon="setting-o" name="user" to="/user">用户</van-tabbar-item>
   </van-tabbar>
@@ -25,7 +25,8 @@
 <script setup>
 
 import {useRouter} from "vue-router";
-
+import {ref} from "vue";
+const active = ref('talk');
 const router=useRouter()
 const onClickLeft = () => history.back();
 const onClickRight = () => {
