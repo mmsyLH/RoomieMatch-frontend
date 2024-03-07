@@ -5,7 +5,7 @@ const myAxios = axios.create({
     timeout: 6000
 });
 
-
+myAxios.defaults.withCredentials=true;// 表示向后台发送请求的时候要携带请求的凭证 cookies
 // 响应拦截器
 myAxios.interceptors.response.use(
     (response) => {
@@ -25,9 +25,6 @@ myAxios.interceptors.response.use(
 
         }
         return response.data;
-    },
-    (err) => {
-
     }
 );
 
@@ -37,7 +34,6 @@ myAxios.interceptors.request.use(
         console.log("我要发请求啦")
         console.log(config)
         config.headers["Content-Type"]='application/json;charset=utf-8';
-
         return config;
     },
     (err) => {

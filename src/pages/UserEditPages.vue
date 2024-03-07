@@ -19,20 +19,46 @@
 <script setup lang="ts">
 import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
+import myAxios from "../plugins/axios.ts";
+import {showFailToast, showSuccessToast, Toast} from "vant";
 //整个路由的信息
-const router=useRouter()
+const router = useRouter()
 //当前页面路由的信息
-const route=useRoute()
-console.log("query",route.query)
+const route = useRoute()
+console.log("query", route.query)
 
 const editUser = ref({
-  ediKey:route.query.ediKey,
-  editName:route.query.editName,
-  currentValue:route.query.currentValue,
+  ediKey: route.query.ediKey,
+  editName: route.query.editName,
+  currentValue: route.query.currentValue,
 })
-const onSubmit = (values) => {
-  //todo 提交到后台把ediKey editName  currentValue提交到后台
-  console.log('submit', values);
+const onSubmit = async () => {
+  const res = await myAxios.post("/user/update", {
+    'id': 2,
+    [editUser.value.ediKey]: editUser.value.currentValue,//动态语法
+    // "avatarUrl": "",
+    //  "createTime": "",
+    //  "email": "",
+    //  "gender": 0,
+    //  "id": 0,
+    //  "isDelete": 0,
+    //  "phone": "",
+    //  "plantCode": "",
+    //  "tags": "",
+    //  "updateTime": "",
+    //  "userAccount": "",
+    //  "userPassword": "",
+    //  "userRole": 0,
+    //  "userStatus": 0,
+    //  "username": ""
+  })
+  console.log("res", res);
+  if (res.code === 200 && res.data > 0) {
+    showSuccessToast('更新成功');
+    router.back();//返回之前的页面
+  }else {
+    showFailToast('修改失败');
+  }
 };
 </script>
 <style scoped>

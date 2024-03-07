@@ -4,7 +4,7 @@ import App from './App.vue'
 
 import * as VueRouter from 'vue-router';
 import routes from "./config/router.ts";
-import Vant from 'vant';
+import Vant, {Toast} from 'vant';
 import 'vant/lib/index.css';
 const app=createApp(App);
 // app.use(Button);
@@ -12,7 +12,7 @@ const app=createApp(App);
 // app.use(Icon)
 // app.use(Tabbar);
 // app.use(TabbarItem);
-// app.use(Toast);
+app.use(Toast);
 app.use(Vant)
 
 

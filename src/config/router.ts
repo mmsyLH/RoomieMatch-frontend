@@ -7,6 +7,7 @@ import Talk from "../pages/TalkPages.vue";
 import SearchPages from "../pages/SearchPages.vue";
 import SearchResultPages from "../pages/SearchResultPages.vue";
 import EditUserPages from "../pages/UserEditPages.vue";
+import UserLoginPage from "../pages/UserLoginPage.vue";
 
 
 
@@ -21,6 +22,7 @@ const routes = [
     {path: '/search', component: SearchPages},
     {path: '/user/list', component: SearchResultPages},
     {path: '/user/edit', component: EditUserPages},
+    {path: '/user/login', component: UserLoginPage},
 ]
 
 export default routes;
