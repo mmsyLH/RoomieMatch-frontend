@@ -29,8 +29,8 @@
 <script setup lang="ts">
 import {useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
-import myAxios from "../plugins/axios.ts";
 import {showFailToast, showSuccessToast} from "vant";
+import {getCurrentUser} from "../services/user.ts";
 
 const router = useRouter()
 // const user = ref({
@@ -50,13 +50,8 @@ const router = useRouter()
 const user = ref();
 
 onMounted(async () => {
-  const res = await myAxios.get("/user/current");
-  if (res.code === 200) {
-    user.value = res.data;
-    showSuccessToast('获取用户信息成功');
-  } else {
-    showFailToast('获取用户信息失败');
-  }
+  user.value= await getCurrentUser();//获取当前登录用户 todo 用pina去缓存 目前做法多少自定义states下的user.ts
+
 })
 //跳转到编辑页
 const toEdit = (ediKey: string, editName: string, currentValue: string) => {

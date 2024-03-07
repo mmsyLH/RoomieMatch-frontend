@@ -18,14 +18,18 @@
 </template>
 <script setup lang="ts">
 import {useRoute, useRouter} from "vue-router";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import myAxios from "../plugins/axios.ts";
 import {showFailToast, showSuccessToast, Toast} from "vant";
+import {getCurrentUser} from "../services/user.ts";
 //整个路由的信息
 const router = useRouter()
 //当前页面路由的信息
 const route = useRoute()
 console.log("query", route.query)
+
+const currentUser = getCurrentUser();
+
 
 const editUser = ref({
   ediKey: route.query.ediKey,
@@ -33,30 +37,20 @@ const editUser = ref({
   currentValue: route.query.currentValue,
 })
 const onSubmit = async () => {
+  if (!currentUser){
+    showFailToast('用户未登录');
+
+    return;
+  }
   const res = await myAxios.post("/user/update", {
-    'id': 2,
+    'id': currentUser.id,
     [editUser.value.ediKey]: editUser.value.currentValue,//动态语法
-    // "avatarUrl": "",
-    //  "createTime": "",
-    //  "email": "",
-    //  "gender": 0,
-    //  "id": 0,
-    //  "isDelete": 0,
-    //  "phone": "",
-    //  "plantCode": "",
-    //  "tags": "",
-    //  "updateTime": "",
-    //  "userAccount": "",
-    //  "userPassword": "",
-    //  "userRole": 0,
-    //  "userStatus": 0,
-    //  "username": ""
   })
   console.log("res", res);
   if (res.code === 200 && res.data > 0) {
     showSuccessToast('更新成功');
     router.back();//返回之前的页面
-  }else {
+  } else {
     showFailToast('修改失败');
   }
 };
