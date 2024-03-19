@@ -1,23 +1,5 @@
 <template>
-  <!-- 使用 JSON.stringify 输出当前路由的查询参数 -->
-  <!-- {{ JSON.stringify(route.query) }} -->
-  <van-card v-for="user in userList" :key="user.id" :icon="user.avatarUrl"
-            :desc="user.profile"
-            :title="`${user.username} (${user.plantCode})`"
-            :thumb="user.avatarUrl"
-  >
-    <!-- 用户标签模板 -->
-    <template #tags>
-      <van-tag plain type="primary" v-for="tag in user.tags" :key="tag" style="margin-right: 10px; margin-top: 10px">
-        {{ tag }}
-      </van-tag>
-    </template>
-    <!-- 卡片底部按钮模板 -->
-    <template #footer style="margin-top: 10px">
-      <van-button size="mini">联系我</van-button>
-      <van-button size="mini">按钮</van-button>
-    </template>
-  </van-card>
+  <user-card-list :user-list=userList />
   <!-- 当用户列表为空时显示空状态组件 -->
   <van-empty v-if="!userList || userList.length < 1" description="数据为空~"/>
 </template>
@@ -29,6 +11,7 @@ import myAxios from "../plugins/axios.ts";
 import qs from "qs";//处理请求参数的一个库  例如前端有时候传一个List的时候 如果是get那么后端不识别这个[]
 // 比如a=1 b=2解析成 {a:1,b:2}
 import {showToast} from "vant";
+import UserCardList from "../components/UserCardList.vue";
 
 // 使用 useRoute 获取当前路由对象
 const route = useRoute();
