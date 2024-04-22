@@ -1,8 +1,8 @@
 import axios from "axios";
 // 创建axios实例
 const myAxios = axios.create({
-    baseURL: 'http://localhost:8080/api',
-    timeout: 6000
+    baseURL: 'http://localhost:8080/friend',
+    timeout: 60000
 });
 
 myAxios.defaults.withCredentials=true;// 表示向后台发送请求的时候要携带请求的凭证 cookies
